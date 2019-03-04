@@ -9,14 +9,14 @@
   <title>jvm的理解 | GeekYe的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="这几天在学习JVM（Java虚拟机）的相关知识由于章节限制就不详细描述汇编知识了，在此推荐大家看一本书《揭秘Java虚拟机》我将这几天学到的东西整理如下。 JVM概述Java的跨平台性跨平台性的体现在于，语言调用者无需掌握过多系统API，而是只关注于语言本身的编写，这种机制的好处，就是降低了开发难度与程序迁移，底层实现全部交给JVM来操作底层API，这样就能快速开发程序。我猜这就是为什么Java会">
-<meta name="keywords" content="Java,开发者,程序猿,程序媛,极客,编程,代码,开源,Developer,Programmer,Coder,Geek">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm的理解">
 <meta property="og:url" content="http://drye.top/2019/01/29/jvm的理解/index.html">
 <meta property="og:site_name" content="GeekYe的博客">
 <meta property="og:description" content="这几天在学习JVM（Java虚拟机）的相关知识由于章节限制就不详细描述汇编知识了，在此推荐大家看一本书《揭秘Java虚拟机》我将这几天学到的东西整理如下。 JVM概述Java的跨平台性跨平台性的体现在于，语言调用者无需掌握过多系统API，而是只关注于语言本身的编写，这种机制的好处，就是降低了开发难度与程序迁移，底层实现全部交给JVM来操作底层API，这样就能快速开发程序。我猜这就是为什么Java会">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-03T08:37:42.597Z">
+<meta property="og:updated_time" content="2019-03-04T12:50:02.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm的理解">
 <meta name="twitter:description" content="这几天在学习JVM（Java虚拟机）的相关知识由于章节限制就不详细描述汇编知识了，在此推荐大家看一本书《揭秘Java虚拟机》我将这几天学到的东西整理如下。 JVM概述Java的跨平台性跨平台性的体现在于，语言调用者无需掌握过多系统API，而是只关注于语言本身的编写，这种机制的好处，就是降低了开发难度与程序迁移，底层实现全部交给JVM来操作底层API，这样就能快速开发程序。我猜这就是为什么Java会">
@@ -207,6 +207,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -398,6 +409,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Math</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">arithmetic</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
