@@ -152,6 +152,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-手撸batch-GD线性回归预测苏州房价" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/04/手撸batch-GD线性回归预测苏州房价/">手撸batch_GD线性回归预测苏州房价</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/04/手撸batch-GD线性回归预测苏州房价/" class="archive-article-date">
+  	<time datetime="2019-03-04T14:12:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一直想玩玩Machine Learning，但是迫于工作和生活压力，一直没能真正动手去实现过一个Model。周末闲来无事，顺手写了个Hello World。<br>因为是Hello World,所以并没有弄很多数据，只从安居客上获取了2018年苏州房价趋势数据，对于实际应用Model，可根据Demo,增加特征值、高次项与正则项即可。</p>
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p><img src="/assets/suzhouhouseprice.png" alt="苏州2018年房价走势"><br><a href="&quot;https://www.anjuke.com/fangjia/suzhou2018/&quot;">安居客-苏州市2018年房价</a></p>
+<h3 id="线性回归原理及公式推导"><a href="#线性回归原理及公式推导" class="headerlink" title="线性回归原理及公式推导"></a>线性回归原理及公式推导</h3><p>线性回归的目标就是通过已有的数据集来生成目标函数来预测数据趋势。（公式太多了，不想用LaTex语法敲公式，手写稿将就看看）<br><img src="/assets/3161.png" alt="似然函数推导"><br><img src="/assets/3162.png" alt="梯度下降推导"></p>
+<p>代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">X = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]</span><br><span class="line">Y = [<span class="number">15301</span>, <span class="number">15338</span>, <span class="number">15485</span>,</span><br><span class="line">     <span class="number">15595</span>, <span class="number">15698</span>, <span class="number">15910</span>,</span><br><span class="line">     <span class="number">15999</span>, <span class="number">16116</span>, <span class="number">16330</span>,</span><br><span class="line">     <span class="number">16530</span>, <span class="number">16721</span>, <span class="number">16943</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_fun</span><span class="params">(theta0, theta1)</span>:</span></span><br><span class="line">    sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(len(X)):</span><br><span class="line">        sum = sum + (theta0 + theta1*X[index] - Y[index])**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> sum/len(X)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">diff_fun</span><span class="params">(theta0, theta1, theta_index)</span>:</span></span><br><span class="line">    sum = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span>(theta_index == <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(len(X)):</span><br><span class="line">            sum = sum + (theta0 + theta1 * X[index] - Y[index]) * X[index]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(len(X)):</span><br><span class="line">            sum = sum + (theta0 + theta1 * X[index] - Y[index]) * <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> sum / len(X)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">BGD_gradient</span><span class="params">(intial_theta0, intial_theta1, alpha, iteration, break_point)</span>:</span></span><br><span class="line">    theta0 = intial_theta0</span><br><span class="line">    theta1 = intial_theta1</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>, iteration):</span><br><span class="line">        before = loss_fun(theta0, theta1)</span><br><span class="line">        theta0 = theta0 - alpha * diff_fun(theta0, theta1, <span class="number">0</span>)</span><br><span class="line">        theta1 = theta1 - alpha * diff_fun(theta0, theta1, <span class="number">1</span>)</span><br><span class="line">        print(<span class="string">"迭代第%d次，theta0： %d. theta1:  %d"</span> % (num, theta0, theta1))</span><br><span class="line">        after = loss_fun(theta0, theta1)</span><br><span class="line">        print(<span class="string">"迭代第%d次，before_loss： %d. after_loss:  %d"</span> % (num, before, after))</span><br><span class="line">        <span class="keyword">if</span>(abs(before - after) &lt;= break_point):</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> theta0, theta1</span><br><span class="line"></span><br><span class="line">Theta = BGD_gradient(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.01</span>, <span class="number">10000</span>, <span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"result: theta0(%f),theta1(%f)"</span> % (Theta[<span class="number">0</span>], Theta[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">x = np.linspace(<span class="number">1</span>, <span class="number">12</span>, <span class="number">500</span>)</span><br><span class="line">y = Theta[<span class="number">1</span>]*x + Theta[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(x, y)</span><br><span class="line">T = np.arctan2(Y, X) <span class="comment"># for color value</span></span><br><span class="line">plt.scatter(X, Y, s=<span class="number">75</span>, c=T, alpha=<span class="number">.5</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>效果<br><img src="/assets/1615.png" alt="拟合效果"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ML</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/04/手撸batch-GD线性回归预测苏州房价/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hibernate框架Session-createQuery方法抛出java-lang-NoSuchMethodError异常" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -693,8 +772,7 @@
 <p>此方法复杂度为O(n2)。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">methodTwo</span><span class="params">(<span class="keyword">int</span> a[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxSubSeqSum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> first=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> last=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;a.length ; i++) &#123;        <span class="comment">//第一层循环i只向序列的起始位置</span></span><br><span class="line">            <span class="keyword">int</span> thisSubSeqSum=<span class="number">0</span>;                <span class="comment">//注意要在这里定义thisSubSeqSum不然值会在循环中不断累加</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt;a.length ; j++) &#123;    <span class="comment">//第二层循环j只向序列的终止位置</span></span><br><span class="line">                thisSubSeqSum=thisSubSeqSum+a[j];</span><br><span class="line">                <span class="keyword">if</span>(thisSubSeqSum&gt;=maxSubSeqSum)</span><br><span class="line">                &#123;</span><br><span class="line">                    maxSubSeqSum=thisSubSeqSum;</span><br><span class="line">                    first=i;</span><br><span class="line">                    last=j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(first+<span class="string">"---"</span>+last);</span><br><span class="line">        <span class="keyword">return</span> maxSubSeqSum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这个方法比三层的遍历好很多，只是通过简单的优化，省去了不必要的加法。</p>
-<h3 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h3><p>我们换一种思路，正如浙江大学陈越老师所言。</p>
-<p>当我们的算法复杂度达到n2的时候，我们的方案已经很烂了，我们就应该试着将算法提高到nlogn这种阶段</p>
+<h3 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h3><p>当我们的算法复杂度达到n2的时候，我们的方案已经很烂了，我们就应该试着将算法提高到nlogn这种阶段</p>
 <p>这里我们采用分治策略。我们将数组分为左右两半比较，最大子序列和出现的位置有三种情况：</p>
 <ol>
 <li>左半边</li>
@@ -879,6 +957,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ML</a>
               </li>
              
               <li class="article-tag-list-item">

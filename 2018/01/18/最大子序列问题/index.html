@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="GeekYe的博客">
 <meta property="og:description" content="前记连续写了2个小时算法代码，头脑子有点炸。上午一天都在睡觉，下午陪女票买过年的衣服，好不容易到了晚上，抽了点时间学算法，为了明年春招也是够拼的。前段时间看MIT的算法导论，奈何英语太渣果断放弃了，昨天找了一下浙江大学陈越老师的视频看了下，觉得还是讲的挺好的，不是说MIT讲的不好，而是实在跟不上。。。在此感谢互联网给了我接受优质教育的机会。。。扯淡扯完了，进入正题。 最大子序列和问题现在有长度0-">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-04T12:50:12.014Z">
+<meta property="og:updated_time" content="2019-03-04T15:05:43.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大子序列问题">
 <meta name="twitter:description" content="前记连续写了2个小时算法代码，头脑子有点炸。上午一天都在睡觉，下午陪女票买过年的衣服，好不容易到了晚上，抽了点时间学算法，为了明年春招也是够拼的。前段时间看MIT的算法导论，奈何英语太渣果断放弃了，昨天找了一下浙江大学陈越老师的视频看了下，觉得还是讲的挺好的，不是说MIT讲的不好，而是实在跟不上。。。在此感谢互联网给了我接受优质教育的机会。。。扯淡扯完了，进入正题。 最大子序列和问题现在有长度0-">
@@ -181,8 +181,7 @@
 <p>此方法复杂度为O(n2)。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">methodTwo</span><span class="params">(<span class="keyword">int</span> a[])</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxSubSeqSum=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> first=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> last=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;a.length ; i++) &#123;        <span class="comment">//第一层循环i只向序列的起始位置</span></span><br><span class="line">            <span class="keyword">int</span> thisSubSeqSum=<span class="number">0</span>;                <span class="comment">//注意要在这里定义thisSubSeqSum不然值会在循环中不断累加</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt;a.length ; j++) &#123;    <span class="comment">//第二层循环j只向序列的终止位置</span></span><br><span class="line">                thisSubSeqSum=thisSubSeqSum+a[j];</span><br><span class="line">                <span class="keyword">if</span>(thisSubSeqSum&gt;=maxSubSeqSum)</span><br><span class="line">                &#123;</span><br><span class="line">                    maxSubSeqSum=thisSubSeqSum;</span><br><span class="line">                    first=i;</span><br><span class="line">                    last=j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(first+<span class="string">"---"</span>+last);</span><br><span class="line">        <span class="keyword">return</span> maxSubSeqSum;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这个方法比三层的遍历好很多，只是通过简单的优化，省去了不必要的加法。</p>
-<h3 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h3><p>我们换一种思路，正如浙江大学陈越老师所言。</p>
-<p>当我们的算法复杂度达到n2的时候，我们的方案已经很烂了，我们就应该试着将算法提高到nlogn这种阶段</p>
+<h3 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h3><p>当我们的算法复杂度达到n2的时候，我们的方案已经很烂了，我们就应该试着将算法提高到nlogn这种阶段</p>
 <p>这里我们采用分治策略。我们将数组分为左右两半比较，最大子序列和出现的位置有三种情况：</p>
 <ol>
 <li>左半边</li>
@@ -473,6 +472,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">ML</a>
               </li>
              
               <li class="article-tag-list-item">
